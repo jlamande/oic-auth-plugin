@@ -499,7 +499,8 @@ public class OicSecurityRealm extends SecurityRealm {
 
     private UsernamePasswordAuthenticationToken loginAndSetUserData(String userName, IdToken idToken, GenericJson userInfo) throws IOException {
 
-        GrantedAuthority[] grantedAuthorities = determineAuthorities(idToken, userInfo);
+        GrantedAuthority[] grantedAuthorities = 
+		Authorities(idToken, userInfo);
         if(LOGGER.isLoggable(Level.FINEST)) {
 		    StringBuilder grantedAuthoritiesAsString = new StringBuilder("(");
 		    for(GrantedAuthority grantedAuthority : grantedAuthorities) {
@@ -622,7 +623,7 @@ public class OicSecurityRealm extends SecurityRealm {
         } else if (referer != null) {
             target = referer;
         } else {
-            target = Jenkins.getInstance().getRootUrl();
+            target = Jenkins.getInstance().getRootUrlFromRequest();
         }
         return target;
     }
